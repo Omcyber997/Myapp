@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Dashboard</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: sans-serif;
+      background: linear-gradient(to bottom, #90a4ae, #cfd8dc);
+      display: flex;
+      justify-content: center;
+      align-items: flex-start;
+      min-height: 100vh;
+      padding: 20px;
+    }
+    .container {
+      width: 100%;
+      max-width: 400px;
+    }
+    .title {
+      text-align: center;
+      font-size: 1.8em;
+      margin-bottom: 20px;
+    }
+    .grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      grid-template-rows: auto auto;
+      gap: 10px;
+    }
+    .small-tile {
+      background: #eceff1;
+      border-radius: 12px;
+      padding: 30px;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.2);
+      text-align: center;
+      cursor: pointer;
+    }
+    .medium-tile {
+      background: #eceff1;
+      border-radius: 12px;
+      padding: 30px;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.2);
+      text-align: center;
+      grid-row: 1 / 3;
+      cursor: pointer;
+    }
+    .large-tile {
+      background: #eceff1;
+      border-radius: 12px;
+      padding: 40px;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.2);
+      text-align: center;
+      margin-top: 10px;
+      grid-column: 1 / 3;
+      cursor: pointer;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="title">Dashboard</div>
+    <div class="grid">
+      <div class="small-tile" onclick="goToTasks()">Tile 1</div>
+      <div class="medium-tile" onclick="goToTasks()">Tile 3</div>
+      <div class="small-tile" onclick="goToTasks()">Tile 2</div>
+      <div class="large-tile" onclick="goToTasks()">Large Tile</div>
+    </div>
+  </div>
+
+  <script>
+    function goToTasks() {
+      window.location.href = "tasks.html";
+    }
+  </script>
+</body>
+</html>
