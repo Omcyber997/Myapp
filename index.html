@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Login Page</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: sans-serif;
+      background: linear-gradient(to bottom, #90a4ae, #cfd8dc);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+    }
+    .container {
+      background: #eceff1;
+      border-radius: 20px;
+      padding: 30px 20px;
+      text-align: center;
+      width: 90%;
+      max-width: 350px;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+    }
+    .greeting {
+      font-size: 1.5em;
+      margin-bottom: 10px;
+    }
+    .weather-icon {
+      width: 80px;
+      margin-bottom: 5px;
+    }
+    .location {
+      font-size: 1.2em;
+    }
+    .temp {
+      font-size: 1em;
+      margin-bottom: 20px;
+    }
+    .passcode {
+      width: 80%;
+      padding: 8px;
+      font-size: 1em;
+      margin-bottom: 15px;
+      border-radius: 8px;
+      border: 1px solid #999;
+    }
+    .login-btn {
+      padding: 10px 30px;
+      font-size: 1em;
+      border: none;
+      border-radius: 20px;
+      background: linear-gradient(to right, #0288d1, #03a9f4);
+      color: white;
+      cursor: pointer;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="greeting" id="greeting">Welcome</div>
+    <img class="weather-icon" src="https://img.icons8.com/ios/100/000000/partly-cloudy-day--v1.png" alt="Weather Icon">
+    <div class="location" id="location">...</div>
+    <div class="temp" id="temp">...</div>
+    <input type="text" class="passcode" id="passcode" placeholder="Enter Passcode"/>
+    <br/>
+    <button class="login-btn" onclick="handleLogin()">LOGIN</button>
+  </div>
+
+  <script>
+    // Set greeting
+    const hour = new Date().getHours();
+    const greetingEl = document.getElementById("greeting");
+    if (hour < 12) {
+      greetingEl.textContent = "Good Morning";
+    } else if (hour < 18) {
+      greetingEl.textContent = "Good Afternoon";
+    } else {
+      greetingEl.textContent = "Good Evening";
+    }
+
+    // Fetch weather using wttr.in
+    function fetchWeather() {
+      fetch("https://wttr.in/?format=j1")
+        .then(res => res.json())
+        .then(data => {
+          const area = data.nearest_area[0].areaName[0].value;
+          const tempC = data.current_condition[0].temp_C;
+          const desc = data.current_condition[0].weatherDesc[0].value;
+
+          document.getElementById("location").textContent = area;
+          document.getElementById("temp").textContent = `${tempC}°C`;
+
+          const iconEl = document.querySelector(".weather-icon");
+          const descLower = desc.toLowerCase();
+
+          if (descLower.includes("sunny")) {
+            iconEl.src = "https://img.icons8.com/ios/100/000000/sun--v1.png";
+          } else if (descLower.includes("cloud")) {
+            iconEl.src = "https://img.icons8.com/ios/100/000000/partly-cloudy-day--v1.png";
+          } else if (descLower.includes("rain")) {
+            iconEl.src = "https://img.icons8.com/ios/100/000000/rain--v1.png";
+          } else if (descLower.includes("snow")) {
+            iconEl.src = "https://img.icons8.com/ios/100/000000/snow.png";
+          } else if (descLower.includes("thunder")) {
+            iconEl.src = "https://img.icons8.com/ios/100/000000/storm.png";
+          } else {
+            iconEl.src = "https://img.icons8.com/ios/100/000000/partly-cloudy-day--v1.png";
+          }
+        })
+        .catch(err => {
+          console.error(err);
+          document.getElementById("location").textContent = "Unknown";
+          document.getElementById("temp").textContent = "--";
+        });
+    }
+
+    fetchWeather();
+
+    function handleLogin() {
+      const passcode = document.getElementById("passcode").value;
+      if (passcode.trim() !== "") {
+        alert("Login successful!");
+      } else {
+        alert("Please enter a valid passcode.");
+      }
+    }
+  </script>
+</body>
+</html>
